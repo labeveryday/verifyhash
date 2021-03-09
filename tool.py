@@ -5,7 +5,6 @@ import getpass
 from filehash import FileHash
 from tabulate import tabulate
 from pathlib import Path
-from time import sleep
 
 
 def get_file():
@@ -22,20 +21,22 @@ def get_hash(latest_download, hash_type='sha256'):
 
 def print_hash_results(latest_download, downloaded_file, web_address, verify_hash):
     print("-----------FILEHASH RESULTS-----------")
-    print(tabulate([[latest_download, downloaded_file], [web_address, verify_hash]],
-                            headers=["FileName", "FileHash"], tablefmt="pretty"))
     if downloaded_file  == verify_hash:
         print('\n✅ Success HASH MATCH!!! ✅')
     else:
-        print('\n❌ FAILED!!!! HASH DOES NOT MATCH ❌')
+        print("*" * 10, "\n❌ FAILED!!!! HASH DOES NOT MATCH ❌", "*" * 10)
         print('\n')
         print(f'Downloaded hash: {downloaded_file}\n Correct Hash: {verify_hash}')
+    print(tabulate([["Dowloaded File: " + latest_download,
+                     downloaded_file], ["Verified info: " + web_address, verify_hash]],
+                   headers=["FileName", "FileHash"], tablefmt="pretty"))
     input('\n Press any key to exit')
+
 
 if __name__ == "__main__":
     # Enter the verified hash
-    verify_hash = input('Enter hash: ')
-    web_address = input('Enter web address:')
+    verify_hash = input('Enter verified hash: ')
+    web_address = input('Enter download web address:')
     hash_type = input('Enter hashtype: ')
     latest_download = get_file()
     downloaded_file = get_hash(latest_download)
