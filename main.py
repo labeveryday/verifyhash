@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-import csv
+"""
+Python script to verify a file hash.
+"""
 import glob
 import os
-import getpass
+from pathlib import Path
 from filehash import FileHash
 from tabulate import tabulate
-from pathlib import Path
 
 
 def get_file():
@@ -21,12 +22,23 @@ def get_file():
     return latest_download
 
 def get_hash(latest_download, hash_type='sha256'):
-    # sha256hash = FileHash('sha256')
+    """
+    Function get the hash of a file.
+    Args:
+        hash_type (str): hash type for the file (sha256, etc.)
+        return: string of the latest downloaded file
+        rtype: str
+    """
     sha256hash = FileHash(hash_type)
     downloaded_file = sha256hash.hash_file(latest_download)
     return downloaded_file
 
 def print_hash_results(latest_download, downloaded_file, verify_hash, hash_type):
+    """
+    Prints the hash results for downloaded files.
+        return: string of the latest downloaded file
+        rtype: None
+    """
     print("\n", " " * 33, "-" * 20, "FILEHASH RESULTS", "-" * 20, "\n")
     if downloaded_file  == verify_hash.strip():
         print(" " * 39, "*" * 10, "✅ Success HASH MATCH!!! ✅", "*" * 10)
